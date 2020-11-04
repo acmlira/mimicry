@@ -1,0 +1,6 @@
+[submodule "externals/SDL"]
+	path = externals/SDL
+	url = https://github.com/SDL-mirror/SDL.git
+[submodule "externals/skia"]
+	path = externals/skia
+	url = https://github.com/google/skia.git

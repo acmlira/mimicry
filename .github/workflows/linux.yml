@@ -1,0 +1,56 @@
+name: Linux
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout! 
+      uses: actions/checkout@v1
+      with:
+        submodules: true
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 2.x
+
+    - name: Install skia host dependencies
+      working-directory: ./externals/skia
+      shell: bash
+      run: tools/install_dependencies.sh
+
+    - name: Sync skia third party dependencies
+      working-directory: ./externals/skia
+      shell: bash
+      run: python tools/git-sync-deps
+
+    - name: Convert skia Build GN to CMake
+      working-directory: ./externals/skia
+      shell: bash
+      run: bin/gn gen out/cmake --ide=json --json-ide-script=../../gn/gn_to_cmake.py --args='skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_expat=false skia_use_system_libpng=false skia_use_system_freetype2=false is_official_build=true extra_cflags=["-O3"] skia_use_angle=false skia_use_icu=false skia_use_lua=false skia_use_opencl=false skia_use_piex=false skia_use_zlib=false skia_enable_tools=false skia_enable_pdf=false skia_use_gl=true skia_enable_skottie=false'
+
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v1.4
+      with:
+        cmake-version: '3.18.x'
+
+    - name: Setup Ninja
+      uses: ashutoshvarma/setup-ninja@master
+      with:
+        version: 1.10.0
+
+    - name: Build with CMake
+      working-directory: ./
+      run: |
+        mkdir build && cd build
+        cmake ../ -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="-DSK_GL -Wno-unknown-warning-option" -DCMAKE_INSTALL_PREFIX=../install -DSDL_STATIC=ON -DSDL_SHARED=OFF -DSDL_AUDIO=OFF
+        cmake --build .
+
+    - name: Archive results
+      uses: actions/upload-artifact@v1
+      with:
+        name: linux
+        path: ./bin
