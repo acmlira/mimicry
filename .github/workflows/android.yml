@@ -38,7 +38,7 @@ jobs:
         force: true
       
     - name: Set $ndk
-      run: echo $ndk
+      run: echo $ndk && ls toolchains
       env:
         ndk: /home/runner/work/mimicry/mimicry/toolchains
 
