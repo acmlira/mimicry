@@ -30,7 +30,7 @@ set(skiaDir "${projectDir}/externals/skia/out/cmake")
 add_subdirectory("${skiaDir}" EXCLUDE_FROM_ALL)
 set(SKIA_LIBRARY skia)
 
-# Joysticks were causing trouble on android.
+# SK_GL was causing trouble in skia CMake build 
 add_definitions(-DSK_GL=1)
 
 #
