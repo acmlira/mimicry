@@ -16,7 +16,7 @@ android {
             cmake {
                 // Add any cmake options here.
 
-                // cppFlags "-std=c++17 -frtti -fexceptions -landroid"
+                cppFlags "-std=c++17 -frtti -fexceptions -landroid -Wno-error=unused-command-line-argument"
                 arguments "-DANDROID_TOOLCHAIN=clang"
             }
         }
@@ -25,7 +25,7 @@ android {
             //abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
 
             // Limiting to a smaller set of  ABIs to save time while testing:
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a", "arm64-v8a"
         }
     }
 
