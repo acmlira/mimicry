@@ -60,6 +60,8 @@ if(MINGW)
   set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "-mwindows -s")
 endif()
 
+add_definitions(${targetName} SK_GL)
+
 #
 # Build the binary.
 #
