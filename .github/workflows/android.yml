@@ -38,7 +38,7 @@ jobs:
     - name: Convert skia Build GN to CMake
       working-directory: ./externals/skia
       shell: bash
-      run: bin/gn gen out/cmake --ide=json --json-ide-script=../../gn/gn_to_cmake.py --args='skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_expat=false skia_use_system_libpng=false skia_use_system_freetype2=false ndk="/home/runner/work/mimicry/mimicry/android-ndk-r21b" target_os="android" target_cpu="arm" is_debug=false is_component_build=true extra_cflags=["-O3"] skia_use_angle=false skia_use_icu=false skia_use_lua=false skia_use_opencl=false skia_use_piex=false skia_use_zlib=false skia_enable_tools=false skia_enable_pdf=false skia_use_gl=true skia_enable_skottie=false'
+      run: bin/gn gen out/cmake --ide=json --json-ide-script=../../gn/gn_to_cmake.py --args='skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_expat=false skia_use_system_libpng=false skia_use_system_freetype2=false ndk="/home/runner/work/mimicry/mimicry/android-ndk-r21b" target_os="android" is_debug=false is_component_build=true extra_cflags=["-O3"] skia_use_angle=false skia_use_icu=false skia_use_lua=false skia_use_opencl=false skia_use_piex=false skia_use_zlib=false skia_enable_tools=false skia_enable_pdf=false skia_use_gl=true skia_enable_skottie=false'
 
     - name: Copy SDL Java classes
       run: cp ./externals/SDL/android-project/app/src/main/java/org/libsdl/app/* ./platforms/android/android-app/src/main/java/org/libsdl/app
