@@ -16,7 +16,7 @@ android {
             cmake {
                 // Add any cmake options here.
 
-                cppFlags "-std=c++17 -frtti -fexceptions -landroid -Wno-error=unused-command-line-argument"
+                cppFlags "-std=c++17 -frtti -fexceptions -landroid -Wunused-command-line-argument"
                 arguments "-DANDROID_TOOLCHAIN=clang"
             }
         }
