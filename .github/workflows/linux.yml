@@ -46,7 +46,7 @@ jobs:
       working-directory: ./
       run: |
         mkdir build && cd build
-        cmake ../ -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="-DSK_GL -Wno-unknown-warning-option" -DCMAKE_INSTALL_PREFIX=../install -DSDL_STATIC=ON -DSDL_SHARED=OFF -DSDL_AUDIO=OFF
+        cmake ../ -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="-DSK_GL -Wno-unknown-warning-option" -DCMAKE_INSTALL_PREFIX=../install -DSDL_AUDIO=OFF
         cmake --build .
 
     - name: Archive results

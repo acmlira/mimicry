@@ -208,7 +208,12 @@ int main(int argc, char** argv) {
     glGetIntegerv( GL_FRAMEBUFFER_BINDING, &buffer);
     GrGLFramebufferInfo info;
     info.fFBOID = (GrGLuint) buffer;
+
+#if defined(SK_BUILD_FOR_ANDROID)
+    info.fFormat =  GL_RGB8_OES;
+#else
     info.fFormat =  GL_RGB8;
+#endif
 
     GrBackendRenderTarget target(dw, dh, kMsaaSampleCount, kStencilBits, info);
 

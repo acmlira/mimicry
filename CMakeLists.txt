@@ -23,12 +23,15 @@ add_subdirectory(${sdlDir} EXCLUDE_FROM_ALL)
 set(SDL2MAIN_LIBRARY SDL2main)
 set(SDL2_LIBRARY SDL2)
 
+# Joysticks were causing trouble on android.
+add_definitions(-DSDL_JOYSTICK=0)
+
 set(skiaDir "${projectDir}/externals/skia/out/cmake")
 add_subdirectory("${skiaDir}" EXCLUDE_FROM_ALL)
 set(SKIA_LIBRARY skia)
 
 # Joysticks were causing trouble on android.
-add_definitions(-DSDL_JOYSTICK=0)
+add_definitions(-DSK_GL=1)
 
 #
 # Sources (relative to the project root dir).
