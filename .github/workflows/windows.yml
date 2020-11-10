@@ -1,0 +1,46 @@
+name: Windows
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout! 
+      uses: actions/checkout@v1
+      with:
+        submodules: true
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 2.x
+
+    - name: Sync skia third party dependencies
+      working-directory: .\externals\skia
+      shell: cmd
+      run: python tools\git-sync-deps
+
+    - name: Convert skia Build GN to CMake
+      working-directory: .\externals\skia
+      shell: cmd
+      run: bin\gn gen win32\x86 --ide=json --json-ide-script=..\..\gn\gn_to_cmake.py --args='skia_use_system_libjpeg_turbo=false skia_use_system_libwebp=false skia_use_system_expat=false skia_use_system_libpng=false skia_use_system_freetype2=false is_official_build=true target_cpu="x86" extra_cflags=["-O3"] skia_use_angle=false skia_use_icu=false skia_use_lua=false skia_use_opencl=false skia_use_piex=false skia_use_zlib=false skia_enable_tools=false skia_enable_pdf=false skia_use_gl=true skia_enable_skottie=false win_vc="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC" win_sdk="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\win_sdk"'
+
+  -   name: Build with CMake (and NMake)
+      shell: cmd
+      run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+          md build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Debug -G "NMake Makefiles" ..
+          nmake
+
+#     - name: Archive results
+#       uses: actions/upload-artifact@v1
+#       with:
+#         name: linux
+#         path: ./build
+
+
+# C:\program files(x86)\Microsoft Visual Studio 14.0\VC\
