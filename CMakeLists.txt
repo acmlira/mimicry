@@ -26,7 +26,11 @@ set(SDL2_LIBRARY SDL2)
 # Joysticks were causing trouble on android.
 add_definitions(-DSDL_JOYSTICK=0)
 
-set(skiaDir "${projectDir}/externals/skia/out/cmake")
+if(ANDROID)
+  set(skiaDir "${projectDir}/externals/skia/android/${ANDROID_ABI}")
+else()
+  set(skiaDir "${projectDir}/externals/skia/linux")
+endif()
 add_subdirectory("${skiaDir}" EXCLUDE_FROM_ALL)
 set(SKIA_LIBRARY skia)
 
