@@ -16,7 +16,7 @@ android {
             cmake {
                 // Add any cmake options here.
 
-                cppFlags "-std=c++17 -frtti -fexceptions -Wunused-command-line-argument"
+                cppFlags "-std=c++17 -frtti -fexceptions -landroid"
                 arguments "-DANDROID_TOOLCHAIN=clang"
             }
         }
